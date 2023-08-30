@@ -6,7 +6,11 @@ import "fmt"
 // OutputData Требуется реализовать этот интерфейс и вызвать printData не имея доступа к конструктору outsourceUser
 // и не переопределяя метод
 type OutputData interface {
-	printData()
+	toString() string
+}
+
+func printData(o OutputData) {
+	fmt.Println(o.toString())
 }
 
 type OutsourceUser struct {
@@ -26,8 +30,8 @@ func (u *OutsourceUser) toString() string {
 	return u.name + u.age + u.phone
 }
 
-func (u *OutsourceUser) printData() {
-	fmt.Println(u.toString())
+func (u *OutsourceUser) printData() string {
+	return u.toString()
 }
 
 type User struct {
@@ -59,7 +63,6 @@ func main() {
 	outsourceUser := newOutsourceUser("Alex", "20", "8800553535")
 	user := NewUser("Alex", "8800553535", 20)
 	userAdapter := NewUserAdapter(*user)
-	outsourceUser.printData()
-	userAdapter.outsourceUser.printData()
-
+	printData(outsourceUser)
+	printData(userAdapter.outsourceUser)
 }
